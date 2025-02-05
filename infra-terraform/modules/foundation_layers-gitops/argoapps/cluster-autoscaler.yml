@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cluster-autoscaler
+  namespace: argocd
+spec:
+  destination:
+    namespace: kube-system
+    server: https://kubernetes.default.svc
+  project: foundationlayer
+  source:
+    repoURL: 'https://github.com/celigo/foundational-layers-helm-values'
+    path: cluster-autoscaler
+    targetRevision: "${env}"
+    helm:
+      releaseName: cluster-autoscaler
+      valueFiles:
+        - values.yaml
+  syncPolicy:
+    automated: 
+      prune: true
+      selfHeal: true

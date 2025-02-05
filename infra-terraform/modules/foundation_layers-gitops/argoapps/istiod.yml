@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: istiod
+  namespace: argocd
+spec:
+  destination:
+    namespace: istio-system
+    server: https://kubernetes.default.svc
+  project: foundationlayer
+  source:
+    repoURL: 'https://github.com/celigo/foundational-layers-helm-values'
+    path: istiod
+    targetRevision: "${env}"
+    helm:
+      releaseName: istiod
+      valueFiles:
+        - values.yaml
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

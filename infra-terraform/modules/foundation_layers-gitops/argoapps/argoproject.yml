@@ -1,0 +1,16 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: foundationlayer
+  namespace: argocd
+spec:
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
+  destinations:
+    - name: '*'
+      namespace: '*'
+      server: 'https://kubernetes.default.svc'
+  sourceRepos:
+    - 'https://github.com/celigo/foundational-layers-helm-values.git'
+    - 'https://raw.githubusercontent.com/celigo/foundational-layers-helm-charts/gh-pages/'

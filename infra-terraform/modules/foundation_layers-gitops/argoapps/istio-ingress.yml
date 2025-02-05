@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: istio-ingress
+  namespace: argocd
+spec:
+  destination:
+    namespace: istio-ingress
+    server: https://kubernetes.default.svc
+  project: foundationlayer
+  source:
+    repoURL: 'https://github.com/celigo/foundational-layers-helm-values'
+    path: istio-ingress
+    targetRevision: "${env}"
+    helm:
+      releaseName: istio-ingress
+      valueFiles:
+        - values.yaml
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
